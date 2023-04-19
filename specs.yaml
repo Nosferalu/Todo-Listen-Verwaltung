@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: Flask Application API
+  description: An API for a Flask application
+  version: 0.1.0
+servers:
+  - url: http://localhost:5001
+paths:
+  /todo-list/{list_id}:
+    get:
+      description: Returns Entries for the Todo List
+      parameters:
+        - name: list_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to retrieve
+      responses:
+         200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+         404:
+          description: Not Found
+    delete:
+      description: Deletes a Todo List
+      parameters:
+        - name: list_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to delete
+      responses:
+         200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+         404:
+          description: Not Found
+    patch:
+      description: updates a Todo List
+      parameters:
+        - name: list_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to update
+        - name: Json_Object_List
+          in: query
+          schema:
+            type: string
+          description: Name der Liste
+      responses:
+         200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+         404:
+          description: Not Found
+  /todo-list:
+    get:
+      description: Returns every Todo-List
+      responses:
+        200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+        400:
+          description: Not Found
+    post:
+      description: Adds Todo-List
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+        404:
+          description: Not Found
+  /todo-list/{list_id}/entry:
+    post:
+      description: Returns specific entry Todo-List
+      parameters:
+        - name: list_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+        404:
+          description: Not Found
+  /entry/{entry_id} :
+    patch:
+      description: Returns every Todo-List
+      parameters:
+        - name: entry_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+        404:
+          description: Not Found
+    delete:
+      description: Returns specific entry Todo-List
+      parameters:
+        - name: entry_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The id of the Todo List to update
+      responses:
+        200:
+          description: A todo list object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
+        400:
+          description: Not Found
+components:
+  schemas:
+    TodoList:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoList'
